@@ -1,6 +1,8 @@
 import numpy as np
 from numpy import *
 
+import math
+
 # ROS
 import rclpy
 from rclpy.time import Time
@@ -365,8 +367,8 @@ class ArsSimRobotDynamics:
       #
       delta_rho = delta_time*self.robot_velo_ang_robot[2]
       dq_simp_robot = np.zeros((2,), dtype=float)
-      dq_simp_robot[0] = np.math.cos(0.5*delta_rho) # dqw
-      dq_simp_robot[1] = np.math.sin(0.5*delta_rho) # dqz
+      dq_simp_robot[0] = math.cos(0.5*delta_rho) # dqw
+      dq_simp_robot[1] = math.sin(0.5*delta_rho) # dqz
       #
       new_robot_atti_quat_simp = np.zeros((2,), dtype=float)
       new_robot_atti_quat_simp = ars_lib_helpers.Quaternion.quatSimpProd(robot_atti_quat_simp, dq_simp_robot)
@@ -390,12 +392,12 @@ class ArsSimRobotDynamics:
         thrust_specific_lin_z = self.robot_acce_lin_robot[2]+self.gravity+sign_robot_velo_lin_z_robot*1.0/self.mass_quadrotor*self.aerodynamics_coef['z']*self.robot_velo_lin_robot[2]*self.robot_velo_lin_robot[2]
 
         #
-        new_robot_atti_ang_pitch =  np.math.atan2( thrust_specific_lin_x , thrust_specific_lin_z )
-        new_robot_atti_ang_roll  = -np.math.atan2( thrust_specific_lin_y , thrust_specific_lin_z )
+        new_robot_atti_ang_pitch =  math.atan2( thrust_specific_lin_x , thrust_specific_lin_z )
+        new_robot_atti_ang_roll  = -math.atan2( thrust_specific_lin_y , thrust_specific_lin_z )
 
         #
-        new_robot_atti_ang_pitch = self.saturate(new_robot_atti_ang_pitch, -np.math.pi/4.0, np.math.pi/4.0)
-        new_robot_atti_ang_roll = self.saturate(new_robot_atti_ang_roll, -np.math.pi/4.0, np.math.pi/4.0)
+        new_robot_atti_ang_pitch = self.saturate(new_robot_atti_ang_pitch, -math.pi/4.0, math.pi/4.0)
+        new_robot_atti_ang_roll = self.saturate(new_robot_atti_ang_roll, -math.pi/4.0, math.pi/4.0)
 
       else:
         new_robot_atti_ang_pitch = 0.0
