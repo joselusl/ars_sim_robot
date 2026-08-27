@@ -244,13 +244,15 @@ class ArsSimRobotDynamicsRos(Node):
 
   def pubStepTimerCallback(self):
 
+    # Perform the simulation step -> Not needed
     # Get time
-    time_stamp_current = self.get_clock().now()
-
+    # time_stamp_current = self.get_clock().now()
     # Robot
-    self.robot_dynamics.simRobot(time_stamp_current)
+    # self.robot_dynamics.simRobot(time_stamp_current)
 
-    # Publish
+    # Keep the last state already advanced by simStepTimerCallback; and publish it
+
+    # Publish the last state
     # Pose
     self.robotPosePub()
     # Velocity
